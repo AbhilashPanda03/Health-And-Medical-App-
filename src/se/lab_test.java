@@ -28,7 +28,7 @@ import net.proteanit.sql.DbUtils;
 
 /**
  *
- * @author Mahe
+ * @author Abhilash Panda
  */
 public class lab_test extends javax.swing.JFrame {
 
@@ -255,7 +255,6 @@ public class lab_test extends javax.swing.JFrame {
             jTable2.setModel(DbUtils.resultSetToTableModel(rs));
             jTable2.getColumn("button").setCellRenderer(new lab_test.ButtonRenderer());
             jTable2.getColumn("button").setCellEditor(new lab_test.ButtonEditor(new JCheckBox(),this));
-            conn.close();
         } catch(Exception e) {}
     }//GEN-LAST:event_jButton2ActionPerformed
 
