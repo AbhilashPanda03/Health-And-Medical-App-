@@ -189,12 +189,22 @@ public class menu extends javax.swing.JFrame {
         // TODO add your handling code here:
         String[] args={Integer.toString(id)};
         drive.main(args);
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        java.awt.Window win[] = java.awt.Window.getWindows(); 
+        for(int i=0;i<win.length;i++){ 
+            win[i].dispose(); 
+        } 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         String[] args={Integer.toString(id)};
         drive.main(args);
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        java.awt.Window win[] = java.awt.Window.getWindows(); 
+        for(int i=0;i<win.length;i++){ 
+            win[i].dispose(); 
+        } 
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
