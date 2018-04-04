@@ -20,9 +20,12 @@ import java.sql.Statement;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import net.proteanit.sql.DbUtils;
+import static se.medicines.id;
+import static se.medicines.name;
 import static se.user_profile.conn;
 import static se.user_profile.selectedFile;
 
@@ -67,16 +70,18 @@ public class drive extends javax.swing.JFrame {
      */
     
     public static int id;
+    public static String name; 
     
     public drive() {
         initComponents();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         try {
             Statement st=conn.createStatement();
             ResultSet rs=st.executeQuery("select * from details where id="+id);
             rs.next();
-            String name=rs.getString("full_name");
+            name=rs.getString("full_name");
             jButton4.setText(name);
         } catch(Exception e) {}    
         jButton5.setVisible(false);
@@ -98,6 +103,7 @@ public class drive extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -134,6 +140,18 @@ public class drive extends javax.swing.JFrame {
         });
 
         jButton6.setText("My Orders");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Main Page");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -145,6 +163,8 @@ public class drive extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -162,7 +182,9 @@ public class drive extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(jButton1))
                 .addGap(33, 33, 33)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,6 +271,29 @@ public class drive extends javax.swing.JFrame {
         menu.main(args);
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        jButton5.setVisible(false);
+        jPanel1.removeAll();
+        jPanel1.updateUI();
+        try {
+            PreparedStatement st =conn.prepareStatement("select orders.med_name,medicines.quant from orders inner join medicines on medicines.medicine_id=orders.id where medicines.user_id="+id+";");
+            ResultSet rs = st.executeQuery();
+            JTable jTable1=new JTable();
+            jTable1.setModel(DbUtils.resultSetToTableModel(rs));
+            jTable1.setPreferredSize(new Dimension(800,600));
+            jTable1.setEnabled(false);
+            jPanel1.add(jTable1);
+        } catch(Exception e){}
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String[] args={Integer.toString(id),name};
+        main_page.main(args);
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -298,6 +343,7 @@ public class drive extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
