@@ -220,7 +220,7 @@ public class drive extends javax.swing.JFrame {
                 String path=rs.getString("file_path");
                 JButton bt=new JButton(path.substring(path.lastIndexOf("\\")+1));
                 bt.setSize(100,50);
-                bt.addActionListener(new MyClass1(selectedFile.getAbsolutePath()));
+                bt.addActionListener(new MyClass1(path));
                 jPanel1.add(bt);
                 bt.setIcon(icon);
             }
